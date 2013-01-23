@@ -26,5 +26,5 @@ $_['text_rating_desc']  = 'Rating (Highest)';
 $_['text_model_asc']    = 'Model (A - Z)';
 $_['text_model_desc']   = 'Model (Z - A)';
 $_['text_limit']        = 'Show:';
-$_['text_detail']       = 'View Deatil';
+$_['text_detail']       = 'View Detail';
 ?>
