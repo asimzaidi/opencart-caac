@@ -1,4 +1,8 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
+<?php echo $header; ?>
+<?php if ($success) { ?>
+<div class="success"><?php echo $success; ?></div>
+<?php } ?>
+<?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
   <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
@@ -206,7 +210,7 @@
           <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
           <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
           &nbsp;
-          <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
+          <input type="button" value="<?php echo $button_email; ?>" id="button-cart" class="button" />
         </div>
         <div><span>&nbsp;&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;&nbsp;</span></div>
         <div><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
@@ -315,7 +319,7 @@
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
         <?php } ?>
-        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
+        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_detail; ?></a></div>
       <?php } ?>
     </div>
   </div>
@@ -340,34 +344,28 @@ $('.colorbox').colorbox({
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').bind('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/cart/add',
-		type: 'post',
-		data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea'),
-		dataType: 'json',
-		success: function(json) {
-			$('.success, .warning, .attention, information, .error').remove();
-			
-			if (json['error']) {
-				if (json['error']['option']) {
-					for (i in json['error']['option']) {
-						$('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
-					}
-				}
-			} 
-			
-			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
-				$('.success').fadeIn('slow');
-					
-				$('#cart-total').html(json['total']);
-				
-				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
-			}	
-		}
-	});
-});
+ $.ajax({
+        url: 'index.php?route=checkout/cart/add',
+        type: 'post',
+        data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea'),
+        dataType: 'json',
+        success: function(json) {
+            $('.success, .warning, .attention, information, .error').remove();
+            
+            if (json['error']) {
+                if (json['error']['option']) {
+                    for (i in json['error']['option']) {
+                        $('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
+                    }
+                }
+            } 
+            
+            if (json['success']) {
+                window.location = "index.php?route=product/email&product_id=<?php echo $product_id;?>"; 
+            }    
+        }
+    });
+});                
 //--></script>
 <?php if ($options) { ?>
 <script type="text/javascript" src="catalog/view/javascript/jquery/ajaxupload.js"></script>
@@ -464,6 +462,4 @@ $('.datetime').datetimepicker({
 	dateFormat: 'yy-mm-dd',
 	timeFormat: 'h:m'
 });
-$('.time').timepicker({timeFormat: 'h:m'});
-//--></script> 
-<?php echo $footer; ?>
+$('.time').timepicker({timeFormat: 'h:m'})

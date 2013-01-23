@@ -108,7 +108,8 @@ function getURLVar(urlVarName) {
 } 
 
 function addToCart(product_id, quantity) {
-	quantity = typeof(quantity) != 'undefined' ? quantity : 1;
+    window.location = "index.php?route=product/product&product_id="+product_id;
+	/*quantity = typeof(quantity) != 'undefined' ? quantity : 1;
 
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
@@ -132,7 +133,7 @@ function addToCart(product_id, quantity) {
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}	
 		}
-	});
+	});*/
 }
 function addToWishList(product_id) {
 	$.ajax({

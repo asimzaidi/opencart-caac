@@ -4,4 +4,5 @@ $_['heading_title'] = 'Featured';
 
 // Text
 $_['text_reviews']  = 'Based on %s reviews.'; 
+$_['text_detail']   = 'View Detail';
 ?>

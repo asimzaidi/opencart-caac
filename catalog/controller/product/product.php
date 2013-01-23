@@ -74,7 +74,7 @@ class ControllerProductProduct extends Controller {
 			
 			if (isset($this->request->get['filter_category_id'])) {
 				$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
-			}	
+			}            	
 						
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('text_search'),
@@ -88,6 +88,13 @@ class ControllerProductProduct extends Controller {
 		} else {
 			$product_id = 0;
 		}
+        if (isset($this->session->data['success'])) {
+            $this->data['success'] = $this->session->data['success'];
+    
+        unset($this->session->data['success']);
+        } else {
+        $this->data['success'] = '';
+        }
 		
 		$this->load->model('catalog/product');
 		
@@ -118,7 +125,7 @@ class ControllerProductProduct extends Controller {
 						
 			if (isset($this->request->get['filter_category_id'])) {
 				$url .= '&filter_category_id=' . $this->request->get['filter_category_id'];
-			}
+			}                           
 												
 			$this->data['breadcrumbs'][] = array(
 				'text'      => $product_info['name'],
@@ -160,7 +167,8 @@ class ControllerProductProduct extends Controller {
 			$this->data['entry_bad'] = $this->language->get('entry_bad');
 			$this->data['entry_captcha'] = $this->language->get('entry_captcha');
 			
-			$this->data['button_cart'] = $this->language->get('button_cart');
+			$this->data['button_email'] = $this->language->get('button_email');
+            $this->data['button_detail'] = $this->language->get('button_detail');
 			$this->data['button_wishlist'] = $this->language->get('button_wishlist');
 			$this->data['button_compare'] = $this->language->get('button_compare');			
 			$this->data['button_upload'] = $this->language->get('button_upload');
